@@ -1,0 +1,8 @@
+<div class="loading position-fixed" style="display:none">
+    <div class="spinner position-absolute">
+        {%- for i in range(10) %}
+        <div class="rect{{ loop.index }}"
+             style="-webkit-animation-delay: {{ -1.5+0.1*loop.index }}s;animation-delay: {{ -1.5+0.1*loop.index }};"></div>
+        {%- endfor %}
+    </div>
+</div>

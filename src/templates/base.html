@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<!--<html lang="en"data-bs-theme="dark">-->
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="static/css/bootstrap-5.3.0.min.css"/>
+    <link rel="stylesheet" href="static/css/spinner.css"/>
+
+    {% endblock styles %}
+
+    <title>TestProject</title>
+    <script type="text/javascript" src="/static/js/jquery-3.7.0.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap-5.3.1.min.js"></script>
+
+    {% endblock head %}
+</head>
+<body>
+<nav id="navbar" class="navbar navbar-expand-xl border-bottom">
+    <div class="container">
+        <a class="navbar-brand" href="/"><b>Templater</b></a>
+    </div>
+
+
+</nav>
+
+{% block content %}
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}
+</body>
+</html>

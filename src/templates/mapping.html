@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'spinners.html' %}
+
+<br>
+<div class="container mb-3 p-2">
+    <table id="mapping_table" class="table table-bordered align-middle table-striped" style="text-align:center">
+        <thead>
+        <tr>
+            <th scope="col">Переменная шаблона</th>
+            <th scope="col">Значение переменной</th>
+        </tr>
+        </thead>
+        <tbody id="body_table">
+        {% for variable in template_variables %}
+        <tr>
+            <td>{{ variable }}</td>
+            <td>
+                <select class="form-select my-2 border-secondary">
+                    <option value="">————</option>
+                    {% for col_name in col_from_xlsx %}
+                    <option value="{{ col_name }}" selected>{{ col_name }}</option>
+
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-flex flex-row-reverse">
+        <button type="button" class="btn btn-primary" onclick="render()">Сопоставить</button>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+    function render() {
+        $("body > div.loading").show();
+        let table = document.getElementById('mapping_table');
+        const mapping = {};
+        for (let i = 1; i < table.rows.length; i++) {
+            mapping[table.rows[i].cells[0].textContent] = table.rows[i].cells[1].querySelector('select').value;
+        }
+        let url = window.location.href;
+        let params = (new URL(url)).searchParams;
+
+        fetch("/process", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "mapping": mapping,
+                "path_to_template": params.get("path_to_template"),
+                "path_to_data": params.get("path_to_data")
+            })
+        })
+            .then(res => {
+                const disposition = res.headers.get('Content-Disposition');
+                filename = disposition.split(/;(.+)/)[1].split(/=(.+)/)[1];
+                if (filename.toLowerCase().startsWith("utf-8''"))
+                    filename = decodeURIComponent(filename.replace("utf-8''", ''));
+                else
+                    filename = filename.replace(/['"]/g, '');
+                return res.blob();
+            })
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a); // append the element to the dom
+                a.click();
+                a.remove(); // afterwards, remove the element
+                location.href="/";
+            });
+
+    }
+</script>
+{% endblock script %}

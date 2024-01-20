@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  web_test:
+    build:
+      context: ..
+      dockerfile: ./docker/web.Dockerfile
+    ports:
+      - 8000:8000
+    image: web_test
+    container_name: templater

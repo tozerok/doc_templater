@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mb-3 p-2">
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label class="form-label">Файл шаблона (docx):</label>
+        <input class="form-control form-control" type="file" name="template_file" required/>
+        <br>
+        <label class="form-label">Файл наполнения (xls, xlsx):</label>
+        <input class="form-control form-control" type="file" name="data_file" required/>
+        <br>
+        <button type="submit" class="btn btn-primary">Загрузить</button>
+    </form>
+</div>
+{% endblock content %}
