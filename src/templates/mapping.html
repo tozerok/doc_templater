@@ -19,10 +19,9 @@
             <td>{{ variable }}</td>
             <td>
                 <select class="form-select my-2 border-secondary">
-                    <option value="">————</option>
+                    <option value="" selected>————</option>
                     {% for col_name in col_from_xlsx %}
-                    <option value="{{ col_name }}" selected>{{ col_name }}</option>
-
+                        <option value="{{ col_name }}">{{ col_name }}</option>
                     {% endfor %}
                 </select>
             </td>
@@ -77,7 +76,7 @@
                 document.body.appendChild(a); // append the element to the dom
                 a.click();
                 a.remove(); // afterwards, remove the element
-                location.href="/";
+                location.href = "/";
             });
 
     }

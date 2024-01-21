@@ -39,7 +39,9 @@ async def mapper(request: Request,
                  path_to_template: str,
                  path_to_data: str
                  ):
-    template_variables = DocxTemplate(path_to_template).get_undeclared_template_variables()
+    template_variables = list(DocxTemplate(path_to_template).get_undeclared_template_variables())
+    template_variables.sort()
+    logger.warning(template_variables)
     col_from_xlsx = pd.read_excel(path_to_data).columns
 
     return templates.TemplateResponse("mapping.html", {"request": request,
@@ -78,13 +80,9 @@ async def upload(request: Request,
 async def process(request: Request,
                   data: MappingInfo
                   ):
-    print(data.__dict__)
     mapping = data.mapping
     path_to_template = data.path_to_template
     path_to_data = data.path_to_data
-    print(mapping)
-    print(path_to_template)
-    print(path_to_data)
     df = pd.read_excel(path_to_data)
 
     if not "file_name" in df.columns:
