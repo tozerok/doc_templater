@@ -1,1 +1,1 @@
-# doc_templater
+# Генератор docx файлов
