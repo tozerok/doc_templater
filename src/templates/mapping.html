@@ -42,7 +42,8 @@
         let table = document.getElementById('mapping_table');
         const mapping = {};
         for (let i = 1; i < table.rows.length; i++) {
-            mapping[table.rows[i].cells[0].textContent] = table.rows[i].cells[1].querySelector('select').value;
+            if(table.rows[i].cells[1].querySelector('select').value)
+                mapping[table.rows[i].cells[0].textContent] = table.rows[i].cells[1].querySelector('select').value;
         }
         let url = window.location.href;
         let params = (new URL(url)).searchParams;

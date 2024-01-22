@@ -7,5 +7,8 @@ services:
       dockerfile: ./docker/web.Dockerfile
     ports:
       - 8000:8000
+    volumes:
+      - ../workdir:/app/workdir
+      - ../output_dir:/app/output_dir
     image: web_test
     container_name: templater
